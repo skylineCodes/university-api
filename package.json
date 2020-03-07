@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node src/index.js",
-    "dev": "env-cmd nodemon src/index.js",
+    "dev": "env-cmd nodemon --exec babel-node src/index.js",
+    "build": "babel src --out-dir build",
+    "start": "node build/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -17,6 +18,12 @@
     "mongoose": "^5.9.3"
   },
   "devDependencies": {
-    "env-cmd": "^10.1.0"
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.8.7",
+    "@babel/node": "^7.8.7",
+    "@babel/plugin-transform-spread": "^7.8.3",
+    "@babel/preset-env": "^7.8.7",
+    "env-cmd": "^10.1.0",
+    "nodemon": "^2.0.2"
   }
 }
