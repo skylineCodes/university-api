@@ -1,27 +1,28 @@
-const mongoose = require('mongoose');
+import mongoose, { Schema } from 'mongoose';
 
-const universitySchema = new mongoose.Schema({
+const schema = new Schema({
   name: {
     type: String,
     required: true,
-    trim: true,
-  },
-  logo: String,
-  rank: {
-    type: Number,
-    required: true,
-  },
-  description: {
-    type: String,
     trim: true,
   },
   acronym: {
     type: String,
     required: true,
     trim: true,
-    lowercase: true,
+    uppercase: true,
   },
-  motto: {
+  about: {
+    type: String,
+    required: true,
+    trim: true,
+  },
+  state: {
+    type: String,
+    required: true,
+    trim: true,
+  },
+  city: {
     type: String,
     required: true,
     trim: true,
@@ -29,21 +30,54 @@ const universitySchema = new mongoose.Schema({
   address: {
     type: String,
     required: true,
+    trim: true,
   },
-  longitude: {
+  viceChancellor: {
+    type: Schema.Types.ObjectId,
+    required: true,
+    ref: 'Lecturer',
+  },
+  deputyViceChancellor: {
+    type: Schema.Types.ObjectId,
+    required: true,
+    ref: 'Lecturer',
+  },
+  registrar: {
+    type: Schema.Types.ObjectId,
+    required: true,
+    ref: 'Lecturer',
+  },
+  bursar: {
+    type: Schema.Types.ObjectId,
+    required: true,
+    ref: 'Lecturer',
+  },
+  founded: {
     type: Number,
     required: true,
+    trim: true,
   },
-  latitude: {
-    type: Number,
-    required: true,
-  },
-  media: {
+  motto: {
     type: String,
     required: true,
+    trim: true,
+  },
+  type: {
+    type: String,
+    required: true,
+    trim: true,
+    enum: ['federal', 'state', 'private'],
+  },
+  logoUrl: {
+    type: String,
+    required: true,
+    trim: true,
+  },
+  websiteUrl: {
+    type: String,
+    required: true,
+    trim: true,
   },
 });
 
-const University = mongoose.model('University', universitySchema);
-
-module.exports = University;
+module.exports = mongoose.model('University', schema);
