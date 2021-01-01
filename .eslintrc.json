@@ -15,5 +15,10 @@
         "sourceType": "module"
     },
     "rules": {
+        "linebreak-style": "off",
+        "template-curly-spacing": [
+            "error",
+            "always"
+        ]
     }
 }

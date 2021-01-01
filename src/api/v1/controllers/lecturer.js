@@ -1,0 +1,1 @@
+// Lecturer routes controllers
