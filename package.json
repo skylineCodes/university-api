@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "env-cmd nodemon --exec babel-node src/index.js",
+    "dev": "cross-env DEBUG=log,error env-cmd nodemon --exec babel-node src/index.js",
     "build": "babel src --out-dir build",
     "start": "node build/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -13,6 +13,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "cross-env": "^7.0.3",
+    "debug": "^4.3.1",
     "express": "^4.17.1",
     "mongodb": "^3.6.3",
     "mongoose": "^5.11.8"
