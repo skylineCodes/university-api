@@ -1,5 +1,5 @@
-import app from './app';
-import debug from './config/debug';
+import app from './app.js';
+import debug from './config/debug.js';
 
 /**
  * Start up server

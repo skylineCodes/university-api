@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import lecturer from './routes/lecturer';
+import lecturer from './routes/lecturer.js';
 
 const router = Router();
 
