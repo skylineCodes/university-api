@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "type": "module",
   "scripts": {
     "dev": "cross-env DEBUG=log,error env-cmd nodemon --exec babel-node src/index.js",
     "build": "babel src --out-dir build",
@@ -15,10 +14,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@hapi/joi": "^17.1.1",
     "cross-env": "^7.0.3",
     "debug": "^4.3.1",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "express-joi-validation": "^5.0.0",
     "mongodb": "^3.6.3",
     "mongoose": "^5.11.8"
   },

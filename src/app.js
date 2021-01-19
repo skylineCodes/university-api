@@ -1,6 +1,6 @@
 import express from 'express';
-import connectDB from'./db/connection.js';
-import api from './api/index.js';
+import connectDB from './db/connection';
+import api from './api';
 
 connectDB();
 
