@@ -1,27 +1,19 @@
 import mongoose from 'mongoose';
-import debug from '../config/debug.js';
+import debug from '../config/debug';
 
-const connectDB = async () => {
+const connection = async () => {
   try {
     const conn = await mongoose.connect(process.env.MONGODB_URL, {
       useUnifiedTopology: true,
       useNewUrlParser: true,
       useCreateIndex: true,
+      useFindAndModify: true,
     });
-
-    console.log(`MongoDB Connected: ${conn.connection.host}`);
+    debug.log(`MongoDB connected: ${ conn.connection.host }`);
   } catch (e) {
-    console.error(`Error: ${e.message}`);
+    debug.error(`MongoDB connection error: ${ e.message }`);
     process.exit(1);
   }
 };
 
-export default connectDB;
-
-// mongoose.connect(process.env.MONGODB_URL, {
-//   useNewUrlParser: true,
-//   useCreateIndex: true,
-//   useUnifiedTopology: true,
-// })
-//   .then(() => debug.log('Database connection successful!'))
-//   .catch((err) => debug.log('Unable to connect to the mongodb instance. Error: ', err.message));
+export default connection;

@@ -1,0 +1,10 @@
+{
+    "ignore": [
+        ".git",
+        "node_modules"
+    ],
+    "watch": [
+        "./"
+    ],
+    "exec": "node --es-module-specifier-resolution=node src/index.js"
+}
