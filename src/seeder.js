@@ -14,7 +14,7 @@ const importData = async () => {
         await Lecturer.insertMany(lecturers);
 
         console.log('Data imported');
-        // process.exit();
+        process.exit();
     } catch (e) {
         console.error(e.message);
         process.exit(1);
