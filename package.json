@@ -10,27 +10,28 @@
     "start": "node build/index.js",
     "data:import": "node src/seeder",
     "data:destroy": "node src/seeder -d",
-    "test": "jest"
+    "test": "nodemon --exec \"mocha -R min\""
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@hapi/joi": "^17.1.1",
-    "cross-env": "^7.0.3",
+    "assert": "^2.0.0",
     "debug": "^4.3.1",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-joi-validation": "^5.0.0",
+    "mocha": "^8.2.1",
     "mongodb": "^3.6.3",
-    "mongoose": "^5.11.8"
+    "mongoose": "^5.11.8",
+    "superagent": "^6.1.0"
   },
   "devDependencies": {
     "env-cmd": "^10.1.0",
     "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.22.1",
-    "jest": "^26.6.3",
     "nodemon": "^2.0.6"
   }
 }

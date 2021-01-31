@@ -22,6 +22,7 @@ const updateLecturerSchema = Joi.object({
 const router = Router();
 
 router.get('/', controller.findAll);
+router.get('/:id', controller.findSingle);
 router.post('/', validator.body(createLecturerSchema), controller.create);
 router.patch('/:id', validator.body(updateLecturerSchema), controller.update);
 router.delete('/:id', controller.remove);
