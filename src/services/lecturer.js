@@ -1,4 +1,4 @@
-import LecturerModel from '../models/lecturer';
+import LecturerModel from '../models/lecturer.js';
 
 export const create = (data) => LecturerModel.create(data);
 

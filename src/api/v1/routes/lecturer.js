@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { createValidator } from 'express-joi-validation';
 import Joi from '@hapi/joi';
-import * as controller from '../controllers/lecturer';
+import * as controller from '../controllers/lecturer.js';
 
 const validator = createValidator();
 

@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import debug from '../config/debug';
+import debug from '../config/debug.js';
 
 const connection = async () => {
   try {

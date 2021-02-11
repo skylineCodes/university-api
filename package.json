@@ -10,7 +10,7 @@
     "start": "node build/index.js",
     "data:import": "node src/seeder",
     "data:destroy": "node src/seeder -d",
-    "test": "nodemon --exec \"mocha -R min\""
+    "test": "nodemon --exec \"mocha\""
   },
   "keywords": [],
   "author": "",
@@ -24,8 +24,7 @@
     "express-joi-validation": "^5.0.0",
     "mocha": "^8.2.1",
     "mongodb": "^3.6.3",
-    "mongoose": "^5.11.8",
-    "superagent": "^6.1.0"
+    "mongoose": "^5.11.8"
   },
   "devDependencies": {
     "env-cmd": "^10.1.0",

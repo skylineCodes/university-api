@@ -1,4 +1,4 @@
-import * as LecturerService from '../../../services/lecturer';
+import * as LecturerService from '../../../services/lecturer.js';
 
 export const create = async (req, res) => {
   const lecturer = await LecturerService.create(req.body);

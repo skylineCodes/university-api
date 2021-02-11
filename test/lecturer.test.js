@@ -1,6 +1,3 @@
-// import request from 'superagent';
-// import app from '../src/app.js';
-
 // test('Should create a lecturer', async () => {
 //     await request(app).post('/v1/lecturer').send({
 //         "name": "Armstrong Tyler",
@@ -90,7 +87,13 @@ const lecturerData = {
 
 //tell mongoose to use es6 implementation of promises
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost:27017/universities_api_test');
+mongoose.connect('mongodb://localhost:27017/universities_api_test', {
+  useUnifiedTopology: true,
+  useNewUrlParser: true,
+  useCreateIndex: true,
+  useFindAndModify: true,
+  useFindAndModify: false
+});
 
 mongoose.connection
   .once('open', () =>
@@ -99,24 +102,136 @@ mongoose.connection
   .on('error', (error) => {
     console.warn('Error : ', error);
   });//Called hooks which runs before something.
-    
-beforeEach((done) => {
-    mongoose.connection.collections.lecturers.drop(() => {
-      //this function runs after the drop is completed
-      done(); //go ahead everything is done now.
-    }); 
-});
 
-describe('Creating documents', () => {
-  it('creates a lecturer', (done) => {
-    //assertion is not included in mocha so
-    //require assert which was installed along with mocha
+describe('Lecturer documents', () => {
+  after((done) => {
+    mongoose.connection.collections.lecturers.drop(() => {
+      done();
+    });
+  });
+
+  // Post Method
+  it('creates a lecturer with status code 201', (done) => {
     const lecturer = new LecturerModel(lecturerData);
     lecturer
-      .save() //takes some time and returns a promise
+      .save()
       .then(() => {
-        assert(!lecturer.isNew); //if poke is saved to db it is not new
+        assert(!lecturer.isNew);
         done();
       });
+  });
+
+  // Get Method
+  it('finds lecturer with the name of Armstrong Tyler', (done) => {
+    LecturerModel.findOne({ name: 'Armstrong Tyler' }).then((lecturer) => {
+      assert(lecturer.name === 'Armstrong Tyler');
+      assert(lecturer.position === 'Senior Lecturer');
+      assert(lecturer.about === 'This is the best descripion');
+      assert(lecturer.qualification === 'Bsc');
+      done();
+    });
+  });
+
+  // Delete Method
+  it ('removes a lecturer using its instance', (done) => {
+    LecturerModel.deleteOne().then(() =>
+      LecturerModel.findOne({ name: 'Armstrong Tyler' })
+      .then((lecturer) => {
+        assert(lecturer === null);
+        done();
+      })
+    );
+  });
+
+  it('removes multiple lecturers', (done) => {
+    LecturerModel.deleteMany().then(() =>
+      LecturerModel.findOne({ name: 'Armstrong Tyler' })
+        .then((lecturer) => {
+        assert(lecturer === null);
+        done();
+      })
+    );
+  });
+
+  it('removes a lecturer', (done) => {
+    LecturerModel.findOneAndDelete({ name: 'Armstrong Tyler' }).then(() =>
+      LecturerModel.findOne({ name: 'Armstrong Tyler' }).then((lecturer) => {
+        assert(lecturer === null);
+        done();
+      })
+    );
+  });
+
+  it('removes a lecturer using id', (done) => {
+    const lecturer = new LecturerModel({ name: 'Armstrong Tyler' });
+    lecturer.save().then(() => done());
+    LecturerModel.findByIdAndDelete(lecturer._id).then(() =>
+      LecturerModel.findOne({ name: 'Armstrong Tyler' }).then((lecturer) => {
+        assert(lecturer === null);
+        done();
+      })
+    );
+  });
+
+  // Update Method
+  function assertHelper(statement, done) {
+  statement
+    .then(() => LecturerModel.find({}))
+    .then((lecturers) => {
+      assert(lecturers.length === 1);
+      assert(lecturers[0].name === 'Armstrong Tyler');
+      assert(lecturers[0].position === 'Senior Lecturer');
+      assert(lecturers[0].about === 'This is the best descripion');
+      assert(lecturers[0].qualification === 'Bsc');
+      done();
+    });
+  }
+
+  it('sets and saves lecturer using an instance', (done) => {
+    const lecturer = new LecturerModel(lecturerData);
+    lecturer.save().then(() => done());
+
+    lecturer.set('name', 'Armstrong Tyler');
+    lecturer.set('position', 'Senior Lecturer');
+    lecturer.set('about', 'This is the best descripion');
+    lecturer.set('qualification', 'Bsc');
+    assertHelper(lecturer.save(), done);
+  });
+
+  it('update lecturer using instance', (done) => {
+    const lecturer = new LecturerModel(lecturerData);
+    lecturer.save().then(() => done());
+
+    assertHelper(lecturer.updateOne({ name: 'Armstrong' }), done);
+  });
+
+  it('update all matching lecturers using model', (done) => {
+    const lecturer = new LecturerModel(lecturerData);
+    lecturer.save().then(() => done());
+
+    assertHelper(
+      lecturer.updateOne({ name: 'Chinedu' }, { name: 'Armstrong' }),
+      done
+    );
+  });
+
+  it('update one lecturer using model', (done) => {
+    const lecturer = new LecturerModel(lecturerData);
+    lecturer.save().then(() => done());
+    
+    assertHelper(
+      LecturerModel.findOneAndUpdate({ name: 'Shellington' }, { name: 'Jack' }),
+      done
+    );
+  });
+
+  it('update one lecturer with id using model', (done) => {
+    const lecturer = new LecturerModel(lecturerData);
+    lecturer.save().then(() => done());
+
+    assertHelper(
+      LecturerModel.findByIdAndUpdate(lecturer._id, { name: 'Korede' }),
+      done
+    );
   });
 });
